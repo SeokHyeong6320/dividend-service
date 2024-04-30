@@ -13,6 +13,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.net.URL;
@@ -34,7 +35,7 @@ public class YahooFinanceScrapper implements Scrapper{
     private static final long START_TIME = 86400;
 
     @Override
-    public ScrapedResult scrap(Company company) {
+    public Company scrap(Company company) {
 
         long now = System.currentTimeMillis() / 1000;
 
@@ -47,7 +48,7 @@ public class YahooFinanceScrapper implements Scrapper{
             Elements findParsed = document.getElementsByAttributeValue("data-testid", "history-table");
             Element tbody = findParsed.get(0).children().get(2);
 
-            List<Dividend> list = new ArrayList<>();
+            List<Dividend> list = company.getDividends();
             for (Element e : tbody.getAllElements()) {
                 String text = e.text();
                 if (!text.endsWith("Dividend") || text.length() < 17) {
@@ -72,8 +73,7 @@ public class YahooFinanceScrapper implements Scrapper{
                         .build());
             }
 
-            return ScrapedResult.builder()
-                    .company(company).dividendList(list).build();
+            return company;
 
 
         } catch (IOException e) {

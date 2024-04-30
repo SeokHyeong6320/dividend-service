@@ -1,5 +1,6 @@
 package com.project.domain;
 
+import com.project.dto.CompanyDto;
 import com.project.dto.DividendDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +15,7 @@ import java.util.List;
 @Builder
 public class CompanyDividendInfo {
 
-    private Company company;
+    private CompanyDto company;
 
     private List<DividendDto> dividends;
 }

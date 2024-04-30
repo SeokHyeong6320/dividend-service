@@ -3,6 +3,7 @@ package com.project.service;
 import com.project.domain.Company;
 import com.project.domain.CompanyDividendInfo;
 import com.project.domain.ScrapedResult;
+import com.project.dto.CompanyDto;
 import com.project.dto.DividendDto;
 import com.project.exception.CompanyException;
 import com.project.repository.CompanyRepository;
@@ -41,10 +42,10 @@ public class CompanyService {
     }
 
     private void addDividendInfo(Company company) {
-        ScrapedResult scrapedResult = scrapper.scrap(company);
+       scrapper.scrap(company);
 
-        companyRepository.save(scrapedResult.getCompany());
-        dividendRepository.saveAll(scrapedResult.getDividendList());
+
+        dividendRepository.saveAll(company.getDividends());
 
     }
 
@@ -53,8 +54,8 @@ public class CompanyService {
                 .orElseThrow(() ->
                         new CompanyException("not exist company in db"));
 
-        List<DividendDto> list = dividendRepository.findAllByCompany(findCompany).stream().map(DividendDto::fromEntity).collect(Collectors.toList());
+        List<DividendDto> list = findCompany.getDividends().stream().map(DividendDto::fromEntity).collect(Collectors.toList());
 
-        return new CompanyDividendInfo(findCompany, list);
+        return new CompanyDividendInfo(CompanyDto.fromEntity(findCompany), list);
     }
 }
