@@ -78,4 +78,9 @@ public class CompanyService {
     public void addAutoCompleteKeyword(String companyName) {
         trie.put(companyName, null);
     }
+
+    public void deleteCompany(String ticker) {
+        dividendRepository.deleteByCompanyTicker(ticker);
+        companyRepository.deleteByTicker(ticker);
+    }
 }

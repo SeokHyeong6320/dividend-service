@@ -14,7 +14,10 @@ import java.time.LocalDate;
 @Builder
 public class Dividend {
 
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "dividend_id")
+    private Long id;
+
     private LocalDate date;
 
     private String dividend;

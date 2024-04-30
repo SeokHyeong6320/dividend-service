@@ -34,9 +34,9 @@ public class CompanyController {
     }
 
     @DeleteMapping("/{ticker}")
-    public ResponseEntity<?> deleteCompany(@PathVariable String ticker) {
+    public void deleteCompany(@PathVariable String ticker) {
 
-        return null;
+        companyService.deleteCompany(ticker);
     }
 
 

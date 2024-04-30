@@ -18,4 +18,6 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
     Optional<Company> findByName(String companyName);
 
     Page<Company> findAll(Pageable pageable);
+
+    void deleteByTicker(String ticker);
 }

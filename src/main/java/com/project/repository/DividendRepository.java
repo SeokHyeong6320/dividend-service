@@ -10,8 +10,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface DividendRepository extends JpaRepository<Dividend, LocalDate> {
+public interface DividendRepository extends JpaRepository<Dividend, Long> {
 
     boolean existsByCompanyAndDate(Company company, LocalDate date);
     List<Dividend> findAllByCompany(Company company);
+
+    void deleteByCompanyTicker(String ticker);
 }
