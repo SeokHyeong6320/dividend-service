@@ -1,13 +1,11 @@
 package com.project.controller;
 
-import com.project.dto.CompanyDto;
+import com.project.domain.Company;
 import com.project.service.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/company")
@@ -16,10 +14,11 @@ public class CompanyController {
 
     private final CompanyService companyService;
 
-    @GetMapping("/autocomplete")
-    public ResponseEntity<?> getAutoComplete() {
 
-        return null;
+    @GetMapping("/autocomplete")
+    public ResponseEntity<?> getAutoComplete(@RequestParam String prefix) {
+
+        return ResponseEntity.ok(companyService.findAutoComplete(prefix));
     }
 
     @GetMapping
@@ -29,9 +28,9 @@ public class CompanyController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addCompany(@RequestParam String ticker) {
-        companyService.save(ticker);
-        return null;
+    public void addCompany(@RequestParam String ticker) {
+        Company savedCompany = companyService.save(ticker);
+        companyService.addAutoCompleteKeyword(savedCompany.getName());
     }
 
     @DeleteMapping("/{ticker}")

@@ -10,6 +10,7 @@ import com.project.repository.DividendRepository;
 import com.project.scrap.Scrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.Trie;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -29,8 +30,12 @@ public class CompanyService {
     private final DividendRepository dividendRepository;
     private final Scrapper scrapper;
 
-    public void save(String ticker) {
-        addDividendInfo(addCompanyInfo(ticker));
+    private final Trie<String, String> trie;
+
+    public Company save(String ticker) {
+        Company company = addCompanyInfo(ticker);
+        addDividendInfo(company);
+        return company;
     }
 
     private Company addCompanyInfo(String ticker) {
@@ -65,5 +70,12 @@ public class CompanyService {
         return new PageImpl<>(companyRepository.findAll(pageable).stream()
                 .map(CompanyDto::fromEntity)
                 .collect(Collectors.toList()));
+    }
+
+    public List<String> findAutoComplete(String prefix) {
+        return trie.prefixMap(prefix).keySet().stream().limit(10).collect(Collectors.toList());
+    }
+    public void addAutoCompleteKeyword(String companyName) {
+        trie.put(companyName, null);
     }
 }
