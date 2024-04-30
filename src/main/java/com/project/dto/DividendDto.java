@@ -1,11 +1,13 @@
 package com.project.dto;
 
 import com.project.domain.Company;
+import com.project.domain.Dividend;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDate;
 
 @Getter
@@ -14,8 +16,13 @@ import java.time.LocalDate;
 @Builder
 public class DividendDto {
 
-    private Company company;
-
     private LocalDate date;
-    private Double dividend;
+    private String dividend;
+
+    public static DividendDto fromEntity(Dividend dividend) {
+        return DividendDto.builder()
+                .date(dividend.getDate())
+                .dividend(dividend.getDividend())
+                .build();
+    }
 }

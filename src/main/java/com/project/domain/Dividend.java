@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class Dividend {
 
     @Id
-    private LocalDateTime date;
+    private LocalDate date;
 
     private String dividend;
 

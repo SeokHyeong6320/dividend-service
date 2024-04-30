@@ -16,12 +16,13 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static java.time.LocalDateTime.*;
+import static java.time.LocalDate.*;
 
 @Component
 @RequiredArgsConstructor
@@ -66,7 +67,7 @@ public class YahooFinanceScrapper implements Scrapper{
 
                 list.add(Dividend.builder()
                                 .company(company)
-                                .date(LocalDateTime.of(year, month, day, 0, 0))
+                                .date(LocalDate.of(year, month, day))
                                 .dividend(dividend)
                         .build());
             }
