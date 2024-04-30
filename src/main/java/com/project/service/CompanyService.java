@@ -2,6 +2,7 @@ package com.project.service;
 
 import com.project.domain.Company;
 import com.project.domain.CompanyDividendInfo;
+import com.project.domain.Dividend;
 import com.project.dto.CompanyDto;
 import com.project.dto.DividendDto;
 import com.project.exception.CompanyException;
@@ -48,8 +49,8 @@ public class CompanyService {
     }
 
     private void addDividendInfo(Company company) {
-        scrapper.scrap(company);
-
+        List<Dividend> scrapedList = scrapper.scrap(company);
+        company.setDividends(scrapedList);
 
         dividendRepository.saveAll(company.getDividends());
 

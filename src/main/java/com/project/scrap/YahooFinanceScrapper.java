@@ -35,7 +35,7 @@ public class YahooFinanceScrapper implements Scrapper{
     private static final long START_TIME = 86400;
 
     @Override
-    public Company scrap(Company company) {
+    public List<Dividend> scrap(Company company) {
 
         long now = System.currentTimeMillis() / 1000;
 
@@ -48,7 +48,7 @@ public class YahooFinanceScrapper implements Scrapper{
             Elements findParsed = document.getElementsByAttributeValue("data-testid", "history-table");
             Element tbody = findParsed.get(0).children().get(2);
 
-            List<Dividend> list = company.getDividends();
+            List<Dividend> list = new ArrayList<>();
             for (Element e : tbody.getAllElements()) {
                 String text = e.text();
                 if (!text.endsWith("Dividend") || text.length() < 17) {
@@ -73,7 +73,7 @@ public class YahooFinanceScrapper implements Scrapper{
                         .build());
             }
 
-            return company;
+            return list;
 
 
         } catch (IOException e) {

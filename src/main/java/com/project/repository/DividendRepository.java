@@ -16,4 +16,6 @@ public interface DividendRepository extends JpaRepository<Dividend, Long> {
     List<Dividend> findAllByCompany(Company company);
 
     void deleteByCompanyTicker(String ticker);
+
+    boolean existsByCompanyIdAndDate(Long companyId, LocalDate date);
 }

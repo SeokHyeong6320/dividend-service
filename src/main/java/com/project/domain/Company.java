@@ -21,6 +21,7 @@ public class Company {
     private String name;
     private String ticker;
 
+    @Setter
     @OneToMany(mappedBy = "company")
     private List<Dividend> dividends = new ArrayList<>();
 
@@ -28,4 +29,5 @@ public class Company {
         this.name = name;
         this.ticker = ticker;
     }
+
 }
