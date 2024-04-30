@@ -2,7 +2,6 @@ package com.project.service;
 
 import com.project.domain.Company;
 import com.project.domain.CompanyDividendInfo;
-import com.project.domain.ScrapedResult;
 import com.project.dto.CompanyDto;
 import com.project.dto.DividendDto;
 import com.project.exception.CompanyException;
@@ -11,12 +10,14 @@ import com.project.repository.DividendRepository;
 import com.project.scrap.Scrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -42,14 +43,14 @@ public class CompanyService {
     }
 
     private void addDividendInfo(Company company) {
-       scrapper.scrap(company);
+        scrapper.scrap(company);
 
 
         dividendRepository.saveAll(company.getDividends());
 
     }
 
-    public CompanyDividendInfo findAllCompany(String companyName) {
+    public CompanyDividendInfo findAllCompanyAndDividend(String companyName) {
         Company findCompany = companyRepository.findByName(companyName)
                 .orElseThrow(() ->
                         new CompanyException("not exist company in db"));
@@ -57,5 +58,12 @@ public class CompanyService {
         List<DividendDto> list = findCompany.getDividends().stream().map(DividendDto::fromEntity).collect(Collectors.toList());
 
         return new CompanyDividendInfo(CompanyDto.fromEntity(findCompany), list);
+    }
+
+    public Page<CompanyDto> findAllCompanyList(Pageable pageable) {
+
+        return new PageImpl<>(companyRepository.findAll(pageable).stream()
+                .map(CompanyDto::fromEntity)
+                .collect(Collectors.toList()));
     }
 }

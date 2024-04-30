@@ -1,9 +1,13 @@
 package com.project.controller;
 
+import com.project.dto.CompanyDto;
 import com.project.service.CompanyService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/company")
@@ -19,9 +23,9 @@ public class CompanyController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getCompanyList() {
+    public ResponseEntity<?> getCompanyList(Pageable pageable) {
 
-        return null;
+        return ResponseEntity.ok(companyService.findAllCompanyList(pageable));
     }
 
     @PostMapping

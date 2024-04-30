@@ -21,6 +21,6 @@ public class FinanceController {
     public ResponseEntity<?> getCompanyDividend(@PathVariable String companyName) {
 
 
-        return ResponseEntity.ok(companyService.findAllCompany(companyName));
+        return ResponseEntity.ok(companyService.findAllCompanyAndDividend(companyName));
     }
 }
