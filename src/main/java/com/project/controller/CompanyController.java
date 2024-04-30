@@ -25,8 +25,8 @@ public class CompanyController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addCompany() {
-
+    public ResponseEntity<?> addCompany(@RequestParam String ticker) {
+        companyService.save(ticker);
         return null;
     }
 

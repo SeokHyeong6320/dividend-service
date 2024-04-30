@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -15,10 +16,10 @@ import java.time.LocalDate;
 @Builder
 public class Dividend {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private LocalDate date;
+    @Id
+    private LocalDateTime date;
 
-    private Double dividend;
+    private String dividend;
 
     @ManyToOne
     @JoinColumn(name = "company_id")

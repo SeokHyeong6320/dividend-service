@@ -19,4 +19,9 @@ public class Company {
 
     private String name;
     private String ticker;
+
+    public Company(String name, String ticker) {
+        this.name = name;
+        this.ticker = ticker;
+    }
 }
