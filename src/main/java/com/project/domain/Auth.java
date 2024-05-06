@@ -2,6 +2,7 @@ package com.project.domain;
 
 import com.project.constants.Role;
 import lombok.Data;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
@@ -25,7 +26,13 @@ public class Auth {
 
         private List<String> roles;
 
-
+        public Member toEntity(PasswordEncoder passwordEncoder) {
+            return Member.builder()
+                    .username(this.username)
+                    .password(passwordEncoder.encode(this.password))
+                    .roles(this.roles)
+                    .build();
+        }
 
     }
 }

@@ -27,6 +27,10 @@ spring:
   jwt:
     secret: ZGF5b25lLXNwcmluZy1ib290LWRpdmlkZW5kLXByb2plY3QtdHV0b3JpYWwtand0LXNlY3JldC1rZXkK
 
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
 
 scheduler:
   scrap:

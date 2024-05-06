@@ -1,5 +1,6 @@
 package com.project.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -26,9 +27,12 @@ public class Member implements UserDetails {
     private Long id;
 
     private String username;
+    @JsonIgnore
     private String password;
 
+    @JsonIgnore
     private List<String> roles;
+
 
 
     @Override
@@ -37,21 +41,25 @@ public class Member implements UserDetails {
                 .map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return false;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return false;
     }
 
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return false;
     }
 
+    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return false;
