@@ -84,8 +84,17 @@ public class CompanyService {
         trie.put(companyName, null);
     }
 
+    private void deleteAutoCompleteKeyword(String companyName) {
+        trie.remove(companyName);
+    }
+
     public void deleteCompany(String ticker) {
+        Company findCompany = companyRepository.findByTicker(ticker)
+                .orElseThrow(() -> new CompanyException("not exist company in db"));
+
         dividendRepository.deleteByCompanyTicker(ticker);
         companyRepository.deleteByTicker(ticker);
+
+        deleteAutoCompleteKeyword(findCompany.getName());
     }
 }

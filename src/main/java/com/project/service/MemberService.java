@@ -2,6 +2,7 @@ package com.project.service;
 
 import com.project.domain.Auth;
 import com.project.domain.Member;
+import com.project.exception.AuthException;
 import com.project.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +19,7 @@ public class MemberService {
     public UserDetails loadByUsername(String username) {
         return memberRepository
                 .findByUsername(username).orElseThrow(() ->
-                        new RuntimeException("해당 ID의 유저가 없습니다"));
+                        new AuthException("해당 ID의 유저가 없습니다"));
     }
 
     public Member register(Auth.SignUp member) {
@@ -33,9 +34,9 @@ public class MemberService {
     public Member login(Auth.SignIn member) {
 
         Member findMember = memberRepository.findByUsername(member.getUsername())
-                .orElseThrow(() -> new RuntimeException("해당 ID의 유저가 없습니다"));
+                .orElseThrow(() -> new AuthException("해당 ID의 유저가 없습니다"));
         if (!passwordEncoder.matches(member.getPassword(), findMember.getPassword())) {
-            throw new RuntimeException("비밀번호가 일치하지 않습니다");
+            throw new AuthException("비밀번호가 일치하지 않습니다");
         }
 
         return findMember;

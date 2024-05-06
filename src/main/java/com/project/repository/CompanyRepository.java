@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface CompanyRepository extends JpaRepository<Company, Long> {
 
     boolean existsByTicker(String ticker);
-    Company findByTicker(String ticker);
+    Optional<Company> findByTicker(String ticker);
 
     Optional<Company> findByName(String companyName);
 
