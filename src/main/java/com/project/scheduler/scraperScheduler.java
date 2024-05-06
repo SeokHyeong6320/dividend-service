@@ -42,9 +42,7 @@ public class scraperScheduler {
                                 dividend.getCompany().getId(),
                                 dividend.getDate()
                         )) {
-
                     dividendRepository.save(dividend);
-
                 }
             }
 
@@ -54,7 +52,5 @@ public class scraperScheduler {
                 Thread.currentThread().interrupt();
             }
         }
-
-
     }
 }

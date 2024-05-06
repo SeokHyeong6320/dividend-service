@@ -61,7 +61,10 @@ public class CompanyService {
                 .orElseThrow(() ->
                         new CompanyException("not exist company in db"));
 
-        List<DividendDto> list = findCompany.getDividends().stream().map(DividendDto::fromEntity).collect(Collectors.toList());
+        List<DividendDto> list =
+                findCompany
+                        .getDividends().stream()
+                        .map(DividendDto::fromEntity).collect(Collectors.toList());
 
         return new CompanyDividendInfo(CompanyDto.fromEntity(findCompany), list);
     }
@@ -74,7 +77,8 @@ public class CompanyService {
     }
 
     public List<String> findAutoComplete(String prefix) {
-        return trie.prefixMap(prefix).keySet().stream().limit(10).collect(Collectors.toList());
+        return trie.prefixMap(prefix)
+                .keySet().stream().limit(10).collect(Collectors.toList());
     }
     public void addAutoCompleteKeyword(String companyName) {
         trie.put(companyName, null);

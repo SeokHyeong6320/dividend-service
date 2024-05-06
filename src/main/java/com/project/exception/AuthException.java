@@ -4,25 +4,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class CompanyException extends CustomException{
+public class AuthException extends CustomException{
 
     private String message;
 
-    public CompanyException() {
-    }
-
-    public CompanyException(String message) {
+    public AuthException(String message) {
         super(message);
         this.message = message;
     }
 
-    public CompanyException(String message, Throwable cause) {
+    public AuthException(String message, Throwable cause) {
         super(message, cause);
         this.message = message;
-    }
-
-    public CompanyException(Throwable cause) {
-        super(cause);
     }
 
     @Override
