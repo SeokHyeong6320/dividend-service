@@ -3,32 +3,28 @@ package com.project.scrap;
 import com.project.constants.Month;
 import com.project.domain.Company;
 import com.project.domain.Dividend;
-import com.project.domain.ScrapedResult;
-import com.project.exception.CompanyException;
-import com.project.repository.DividendRepository;
+import com.project.dto.CompanyDto;
+import com.project.exception.CustomException;
+import com.project.exception.ServerException;
 import lombok.RequiredArgsConstructor;
-import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.net.URL;
-import java.time.LocalDate;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static java.time.LocalDate.*;
+import static com.project.exception.ErrorCode.*;
 
 @Component
 @RequiredArgsConstructor
-public class YahooFinanceScrapper implements Scrapper{
+public class YahooFinanceScrapper implements Scrapper {
 
     @Value("${scrapper.YahooFinance.info-url}")
     public String INFO_URL;
@@ -39,12 +35,12 @@ public class YahooFinanceScrapper implements Scrapper{
     private long START_TIME;
 
     @Override
-    public List<Dividend> scrap(Company company) {
+    public List<Dividend> scrap(CompanyDto companyDto) {
 
         long now = System.currentTimeMillis() / 1000;
 
         String url =
-                String.format(DETAIL_URL, company.getTicker(), START_TIME, now);
+                String.format(DETAIL_URL, companyDto.getTicker(), START_TIME, now);
 
 
         try {
@@ -71,9 +67,9 @@ public class YahooFinanceScrapper implements Scrapper{
                 }
 
                 list.add(Dividend.builder()
-                                .company(company)
-                                .date(LocalDate.of(year, month, day))
-                                .dividend(dividend)
+                        .company(companyDto.toEntity())
+                        .date(LocalDate.of(year, month, day))
+                        .dividend(dividend)
                         .build());
             }
 
@@ -98,7 +94,7 @@ public class YahooFinanceScrapper implements Scrapper{
                 titleEle = document.getElementsByClass("svelte-ufs8hf")
                         .getFirst();
             } catch (NoSuchElementException e) {
-                throw new CompanyException("inaccurate company ticker", e);
+                throw new ServerException(TICKER_INACCURATE);
             }
 
             String wholeTitle = titleEle.text();
@@ -109,9 +105,8 @@ public class YahooFinanceScrapper implements Scrapper{
 
 
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new ServerException(SCRAPPER_CONNECTION_FAIL);
         }
 
-        return null;
     }
 }

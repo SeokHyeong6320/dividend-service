@@ -1,6 +1,6 @@
 package com.project.security;
 
-import com.project.service.MemberServiceImpl;
+import com.project.service.impl.MemberServiceImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;

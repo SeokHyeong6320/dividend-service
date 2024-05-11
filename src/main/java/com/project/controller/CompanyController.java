@@ -1,7 +1,7 @@
 package com.project.controller;
 
 import com.project.domain.Company;
-import com.project.service.CompanyServiceImpl;
+import com.project.service.impl.CompanyServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +16,10 @@ public class CompanyController {
     private final CompanyServiceImpl companyServiceImpl;
 
 
-    @GetMapping("/autocomplete")
-    public ResponseEntity<?> getAutoComplete(@RequestParam String prefix) {
-
-        return ResponseEntity.ok(companyServiceImpl.findAutoComplete(prefix));
+    @PreAuthorize("hasRole('WRITE')")
+    @PostMapping
+    public void addCompany(@RequestParam String ticker) {
+        companyServiceImpl.saveCompany(ticker);
     }
 
     @PreAuthorize("hasRole('READ')")
@@ -30,17 +30,16 @@ public class CompanyController {
     }
 
     @PreAuthorize("hasRole('WRITE')")
-    @PostMapping
-    public void addCompany(@RequestParam String ticker) {
-        Company savedCompany = companyServiceImpl.save(ticker);
-        companyServiceImpl.addAutoCompleteKeyword(savedCompany.getName());
-    }
-
-    @PreAuthorize("hasRole('WRITE')")
     @DeleteMapping("/{ticker}")
     public void deleteCompany(@PathVariable String ticker) {
 
         companyServiceImpl.deleteCompany(ticker);
+    }
+
+    @GetMapping("/autocomplete")
+    public ResponseEntity<?> getAutoComplete(@RequestParam String prefix) {
+
+        return ResponseEntity.ok(companyServiceImpl.findAutoComplete(prefix));
     }
 
 

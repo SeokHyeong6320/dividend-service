@@ -3,7 +3,7 @@ package com.project.controller;
 import com.project.domain.Auth;
 import com.project.domain.Member;
 import com.project.security.TokenProvider;
-import com.project.service.MemberServiceImpl;
+import com.project.service.impl.MemberServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

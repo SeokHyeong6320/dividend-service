@@ -1,6 +1,6 @@
 package com.project.config;
 
-import com.project.service.CompanyServiceImpl;
+import com.project.service.impl.CompanyServiceImpl;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -13,14 +13,14 @@ public class InitData {
 
     @PostConstruct
     public void init() {
-//        companyService.save("COKE");
-//        companyService.save("MMM");
-//        companyService.save("QQQ");
-//        companyService.save("NKE");
-//        companyService.save("SPY");
-//        companyService.save("T");
-//        companyService.save("IBM");
-//        companyService.save("INTC");
-//        companyService.save("AAPL");
+//        companyService.saveCompany("COKE");
+//        companyService.saveCompany("MMM");
+//        companyService.saveCompany("QQQ");
+//        companyService.saveCompany("NKE");
+//        companyService.saveCompany("SPY");
+//        companyService.saveCompany("T");
+//        companyService.saveCompany("IBM");
+//        companyService.saveCompany("INTC");
+//        companyService.saveCompany("AAPL");
     }
 }

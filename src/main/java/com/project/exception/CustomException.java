@@ -1,23 +1,15 @@
 package com.project.exception;
 
-public abstract class CustomException extends RuntimeException{
+import lombok.Getter;
 
-    abstract public int getStatusCode();
-    abstract public String getMessage();
+@Getter
+public abstract class CustomException extends RuntimeException {
 
-    public CustomException() {
-        super();
-    }
+    private final ErrorCode errorCode;
 
-    public CustomException(String message) {
-        super(message);
-    }
-
-    public CustomException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public CustomException(Throwable cause) {
-        super(cause);
+    public CustomException(ErrorCode errorCode) {
+        this.errorCode = errorCode;
     }
 }
+
+

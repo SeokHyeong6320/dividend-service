@@ -2,6 +2,7 @@ package com.project.scheduler;
 
 import com.project.domain.Company;
 import com.project.domain.Dividend;
+import com.project.dto.CompanyDto;
 import com.project.repository.CompanyRepository;
 import com.project.repository.DividendRepository;
 import com.project.scrap.Scrapper;
@@ -33,7 +34,7 @@ public class scraperScheduler {
         List<Company> allCompanies = companyRepository.findAll();
 
         for (Company company : allCompanies) {
-            List<Dividend> scrapedList = yahooScrapper.scrap(company);
+            List<Dividend> scrapedList = yahooScrapper.scrap(CompanyDto.fromEntity(company));
             company.setDividends(scrapedList);
             for (Dividend dividend : scrapedList) {
                 if (dividendRepository

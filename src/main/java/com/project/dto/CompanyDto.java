@@ -24,4 +24,12 @@ public class CompanyDto {
                 .build();
     }
 
+    public Company toEntity() {
+        return Company.builder()
+                .id(id)
+                .name(name)
+                .ticker(ticker)
+                .build();
+    }
+
 }

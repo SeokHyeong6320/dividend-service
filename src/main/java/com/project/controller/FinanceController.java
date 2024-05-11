@@ -1,6 +1,7 @@
 package com.project.controller;
 
-import com.project.service.CompanyServiceImpl;
+import com.project.service.FinanceService;
+import com.project.service.impl.CompanyServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,13 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class FinanceController {
 
-    private final CompanyServiceImpl companyServiceImpl;
+    private final FinanceService financeService;
 
     @GetMapping("/dividend/{companyName}")
     public ResponseEntity<?> getCompanyDividend(@PathVariable String companyName) {
 
         return ResponseEntity.ok(
-                companyServiceImpl.findAllCompanyAndDividend(companyName)
+                financeService.findAllCompanyAndDividend(companyName)
         );
     }
 }
