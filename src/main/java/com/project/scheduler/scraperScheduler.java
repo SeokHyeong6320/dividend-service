@@ -5,7 +5,6 @@ import com.project.domain.Dividend;
 import com.project.repository.CompanyRepository;
 import com.project.repository.DividendRepository;
 import com.project.scrap.Scrapper;
-import com.project.service.CompanyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;

@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class CompanyService {
+public class CompanyServiceImpl {
 
     private final CompanyRepository companyRepository;
     private final DividendRepository dividendRepository;

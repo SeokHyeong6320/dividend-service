@@ -31,6 +31,12 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
 
+scrapper:
+  YahooFinance:
+    info-url: https://finance.yahoo.com/quote/%s?p=%s
+    detail-url: https://finance.yahoo.com/quote/%s/history?frequency=1mo&period1=%d&period2=%d
+    start-time: 86400
+
 
 scheduler:
   scrap:

@@ -12,6 +12,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,10 +30,13 @@ import static java.time.LocalDate.*;
 @RequiredArgsConstructor
 public class YahooFinanceScrapper implements Scrapper{
 
-    public static final String INFO_URL = "https://finance.yahoo.com/quote/%s?p=%s";
-    public static final String DETAIL_URL = "https://finance.yahoo.com/quote/%s/history?frequency=1mo&period1=%d&period2=%d";
+    @Value("${scrapper.YahooFinance.info-url}")
+    public String INFO_URL;
+    @Value("${scrapper.YahooFinance.detail-url}")
+    public String DETAIL_URL;
 
-    private static final long START_TIME = 86400;
+    @Value("${scrapper.YahooFinance.start-time}")
+    private long START_TIME;
 
     @Override
     public List<Dividend> scrap(Company company) {

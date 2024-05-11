@@ -1,6 +1,6 @@
 package com.project.config;
 
-import com.project.service.CompanyService;
+import com.project.service.CompanyServiceImpl;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class InitData {
 
-    private final CompanyService companyService;
+    private final CompanyServiceImpl companyServiceImpl;
 
     @PostConstruct
     public void init() {

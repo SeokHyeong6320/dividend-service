@@ -1,11 +1,9 @@
 package com.project.security;
 
-import com.project.repository.MemberRepository;
-import com.project.service.MemberService;
+import com.project.service.MemberServiceImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,16 +24,16 @@ public class TokenProvider {
     public static final int TOKEN_EXPIRE_TIME = 1000 * 60 * 60;
 
     private final SecretKey secretKey;
-    private final MemberService memberService;
+    private final MemberServiceImpl memberServiceImpl;
 
 
-    public TokenProvider(@Value("${spring.jwt.secret}") String key, MemberService memberService) {
+    public TokenProvider(@Value("${spring.jwt.secret}") String key, MemberServiceImpl memberServiceImpl) {
         this.secretKey =
                 new SecretKeySpec(
                         key.getBytes(StandardCharsets.UTF_8),
                         Jwts.SIG.HS256.key().build().getAlgorithm()
                 );
-        this.memberService = memberService;
+        this.memberServiceImpl = memberServiceImpl;
     }
 
     public String generateToken(String username, List<String> roles) {
@@ -74,7 +72,7 @@ public class TokenProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = memberService.loadByUsername(getUsername(token));
+        UserDetails userDetails = memberServiceImpl.loadByUsername(getUsername(token));
         return new UsernamePasswordAuthenticationToken
                 (userDetails, "", userDetails.getAuthorities());
     }
