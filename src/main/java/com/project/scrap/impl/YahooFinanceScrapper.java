@@ -5,6 +5,7 @@ import com.project.domain.Company;
 import com.project.domain.Dividend;
 import com.project.dto.CompanyDto;
 import com.project.exception.ServerException;
+import com.project.exception.ServiceException;
 import com.project.scrap.Scrapper;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
@@ -13,6 +14,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -63,7 +65,7 @@ public class YahooFinanceScrapper implements Scrapper {
                 String dividend = split[3];
 
                 if (month < 0) {
-                    throw new RuntimeException("Unexpected Month enum value -> " + month);
+                    throw new ServerException(MONTH_INACCURATE);
                 }
 
                 list.add(Dividend.builder()
@@ -72,9 +74,7 @@ public class YahooFinanceScrapper implements Scrapper {
                         .dividend(dividend)
                         .build());
             }
-
             return list;
-
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -94,12 +94,16 @@ public class YahooFinanceScrapper implements Scrapper {
                 titleEle = document.getElementsByClass("svelte-3a2v0c")
                         .getFirst();
             } catch (NoSuchElementException e) {
-                throw new ServerException(TICKER_INACCURATE);
+                throw new ServiceException(TICKER_INACCURATE);
             }
 
             String wholeTitle = titleEle.text();
             String companyName =
                     wholeTitle.substring(0, wholeTitle.lastIndexOf(" "));
+
+            if (!StringUtils.hasText(companyName)) {
+                throw new ServiceException(TICKER_INACCURATE);
+            }
 
             return new Company(companyName, ticker);
 

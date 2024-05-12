@@ -8,6 +8,9 @@ public enum ErrorCode {
     SCRAPPER_CONNECTION_FAIL("couldn't connection to website"),
 
     TICKER_INACCURATE("inaccurate company ticker"),
+    COMPANY_PARSING_FAIL("couldn't parsing company info"),
+    MONTH_INACCURATE("unexpected Month enum value"),
+
     COMPANY_NOT_FOUND("couldn't find company in DB"),
     COMPANY_ALREADY_EXIST("This company already exist in DB"),
 

@@ -1,5 +1,6 @@
 package com.project.service.impl;
 
+import com.project.constants.CacheKey;
 import com.project.domain.Company;
 import com.project.domain.Dividend;
 import com.project.dto.CompanyDto;
@@ -12,6 +13,7 @@ import com.project.service.CompanyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.Trie;
+import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +34,7 @@ public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
     private final DividendRepository dividendRepository;
     private final Scrapper scrapper;
+    private final CacheManager cacheManager;
 
     private final Trie<String, String> trie;
 
@@ -66,6 +69,8 @@ public class CompanyServiceImpl implements CompanyService {
         dividendRepository.deleteByCompanyTicker(ticker);
         companyRepository.deleteByTicker(ticker);
 
+        clearFinanceCache(findCompany.getName());
+
         deleteAutoCompleteKeyword(findCompany.getName());
     }
 
@@ -93,5 +98,9 @@ public class CompanyServiceImpl implements CompanyService {
 
     private void deleteAutoCompleteKeyword(String companyName) {
         trie.remove(companyName);
+    }
+
+    private void clearFinanceCache(String companyName) {
+        cacheManager.getCache(CacheKey.KEY_FINANCE).evict(companyName);
     }
 }
