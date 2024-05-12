@@ -1,7 +1,7 @@
 package com.project.controller;
 
+import com.project.domain.DividendInfoResponse;
 import com.project.service.FinanceService;
-import com.project.service.impl.CompanyServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +17,8 @@ public class FinanceController {
     private final FinanceService financeService;
 
     @GetMapping("/dividend/{companyName}")
-    public ResponseEntity<?> getCompanyDividend(@PathVariable String companyName) {
+    public ResponseEntity<DividendInfoResponse>
+            getCompanyDividend(@PathVariable String companyName) {
 
         return ResponseEntity.ok(
                 financeService.findAllCompanyAndDividend(companyName)

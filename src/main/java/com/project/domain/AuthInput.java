@@ -1,12 +1,11 @@
 package com.project.domain;
 
-import com.project.constants.Role;
 import lombok.Data;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
-public class Auth {
+public class AuthInput {
 
     // 로그인
     @Data

@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.rmi.ServerException;
 
 @ControllerAdvice
 public class CustomExceptionHandler {
@@ -19,15 +18,15 @@ public class CustomExceptionHandler {
                 .body(ExceptionResponse.fromErrorCode(e.getErrorCode()));
     }
 
-//    @ExceptionHandler(ServerException.class)
+    @ExceptionHandler(ServerException.class)
     public ResponseEntity<ExceptionResponse>
-                handleServerException(ServiceException e) {
+                handleServerException(ServerException e) {
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ExceptionResponse.fromErrorCode(e.getErrorCode()));
     }
 
-//    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResponse>
                 handleException(Exception e) {
 

@@ -1,13 +1,13 @@
 package com.project.service;
 
-import com.project.domain.Auth;
-import com.project.domain.Member;
+import com.project.domain.AuthInput;
+import com.project.dto.MemberDto;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public interface MemberService {
 
     UserDetails loadByUsername(String username);
-    Member register(Auth.SignUp member);
-    Member login(Auth.SignIn member);
+    MemberDto register(AuthInput.SignUp member);
+    MemberDto login(AuthInput.SignIn member);
 
 }

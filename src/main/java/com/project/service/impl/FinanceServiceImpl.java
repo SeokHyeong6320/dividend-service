@@ -1,7 +1,8 @@
 package com.project.service.impl;
 
+import com.project.constants.CacheKey;
 import com.project.domain.Company;
-import com.project.domain.CompanyDividendInfo;
+import com.project.domain.DividendInfoResponse;
 import com.project.dto.CompanyDto;
 import com.project.dto.DividendDto;
 import com.project.exception.ErrorCode;
@@ -9,6 +10,8 @@ import com.project.exception.ServiceException;
 import com.project.repository.CompanyRepository;
 import com.project.service.FinanceService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,8 +23,10 @@ public class FinanceServiceImpl implements FinanceService {
 
     private final CompanyRepository companyRepository;
 
+
     @Override
-    public CompanyDividendInfo findAllCompanyAndDividend(String companyName) {
+    @Cacheable(key = "#companyName", value = CacheKey.KEY_FINANCE)
+    public DividendInfoResponse findAllCompanyAndDividend(String companyName) {
         Company findCompany = companyRepository.findByName(companyName)
                 .orElseThrow(() ->
                         new ServiceException(ErrorCode.COMPANY_NOT_FOUND));
@@ -31,6 +36,6 @@ public class FinanceServiceImpl implements FinanceService {
                         .getDividends().stream()
                         .map(DividendDto::fromEntity).collect(Collectors.toList());
 
-        return new CompanyDividendInfo(CompanyDto.fromEntity(findCompany), list);
+        return new DividendInfoResponse(CompanyDto.fromEntity(findCompany), list);
     }
 }

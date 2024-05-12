@@ -1,7 +1,8 @@
 package com.project.service.impl;
 
-import com.project.domain.Auth;
+import com.project.domain.AuthInput;
 import com.project.domain.Member;
+import com.project.dto.MemberDto;
 import com.project.exception.ServiceException;
 import com.project.repository.MemberRepository;
 import com.project.service.MemberService;
@@ -30,17 +31,21 @@ public class MemberServiceImpl implements MemberService {
 
 
     @Override
-    public Member register(Auth.SignUp member) {
+    public MemberDto register(AuthInput.SignUp member) {
         boolean exists = memberRepository.existsByUsername(member.getUsername());
         if (exists) {
             throw new ServiceException(USER_ID_ALREADY_EXIST);
         }
 
-        return memberRepository.save(member.toEntity(passwordEncoder));
+
+
+        return MemberDto.fromEntity(
+                memberRepository.save(member.toEntity(passwordEncoder))
+        );
     }
 
     @Override
-    public Member login(Auth.SignIn member) {
+    public MemberDto login(AuthInput.SignIn member) {
 
         Member findMember = memberRepository.findByUsername(member.getUsername())
                 .orElseThrow(() -> new ServiceException(USER_NOT_FOUND));
@@ -49,6 +54,6 @@ public class MemberServiceImpl implements MemberService {
             throw new ServiceException(PASSWORD_NOT_MATCH);
         }
 
-        return findMember;
+        return MemberDto.fromEntity(findMember);
     }
 }

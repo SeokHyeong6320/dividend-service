@@ -25,7 +25,7 @@ public class scraperScheduler {
 
     private final CompanyRepository companyRepository;
     private final DividendRepository dividendRepository;
-    private final Scrapper yahooScrapper;
+    private final Scrapper scrapper;
 
     @CacheEvict(value = "finance", allEntries = true)
     @Scheduled(cron = "${scheduler.scrap.yahoo}")
@@ -34,7 +34,7 @@ public class scraperScheduler {
         List<Company> allCompanies = companyRepository.findAll();
 
         for (Company company : allCompanies) {
-            List<Dividend> scrapedList = yahooScrapper.scrap(CompanyDto.fromEntity(company));
+            List<Dividend> scrapedList = scrapper.scrap(CompanyDto.fromEntity(company));
             company.setDividends(scrapedList);
             for (Dividend dividend : scrapedList) {
                 if (dividendRepository

@@ -29,11 +29,11 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
 
+
+
 scheduler:
   scrap:
     yahoo: 0 0 0 * * *
-
-
 
 scrapper:
   YahooFinance:

@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CompanyDividendInfo {
+public class DividendInfoResponse {
 
     private CompanyDto company;
 

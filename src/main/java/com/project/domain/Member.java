@@ -30,13 +30,10 @@ public class Member implements UserDetails {
 
     @Column(name = "member_name")
     private String username;
-    @JsonIgnore
     @Column(name = "member_pw")
     private String password;
 
-    @JsonIgnore
     private List<String> roles;
-
 
 
     @Override

@@ -1,8 +1,8 @@
 package com.project.service;
 
-import com.project.domain.CompanyDividendInfo;
+import com.project.domain.DividendInfoResponse;
 
 public interface FinanceService {
 
-    CompanyDividendInfo findAllCompanyAndDividend(String companyName);
+    DividendInfoResponse findAllCompanyAndDividend(String companyName);
 }
