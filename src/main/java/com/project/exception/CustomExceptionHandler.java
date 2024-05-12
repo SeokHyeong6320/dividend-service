@@ -19,7 +19,7 @@ public class CustomExceptionHandler {
                 .body(ExceptionResponse.fromErrorCode(e.getErrorCode()));
     }
 
-    @ExceptionHandler(ServerException.class)
+//    @ExceptionHandler(ServerException.class)
     public ResponseEntity<ExceptionResponse>
                 handleServerException(ServiceException e) {
 
@@ -27,7 +27,7 @@ public class CustomExceptionHandler {
                 .body(ExceptionResponse.fromErrorCode(e.getErrorCode()));
     }
 
-    @ExceptionHandler(Exception.class)
+//    @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResponse>
                 handleException(Exception e) {
 

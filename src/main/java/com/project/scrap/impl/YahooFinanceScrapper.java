@@ -1,11 +1,11 @@
-package com.project.scrap;
+package com.project.scrap.impl;
 
 import com.project.constants.Month;
 import com.project.domain.Company;
 import com.project.domain.Dividend;
 import com.project.dto.CompanyDto;
-import com.project.exception.CustomException;
 import com.project.exception.ServerException;
+import com.project.scrap.Scrapper;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -91,7 +91,7 @@ public class YahooFinanceScrapper implements Scrapper {
             Element titleEle;
 
             try {
-                titleEle = document.getElementsByClass("svelte-ufs8hf")
+                titleEle = document.getElementsByClass("svelte-3a2v0c")
                         .getFirst();
             } catch (NoSuchElementException e) {
                 throw new ServerException(TICKER_INACCURATE);

@@ -21,10 +21,13 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public UserDetails loadByUsername(String username) {
-        return memberRepository
+        Member member = memberRepository
                 .findByUsername(username).orElseThrow(() ->
                         new ServiceException(USER_NOT_FOUND));
+
+        return member;
     }
+
 
     @Override
     public Member register(Auth.SignUp member) {

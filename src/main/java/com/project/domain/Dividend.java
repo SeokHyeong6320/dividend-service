@@ -18,8 +18,10 @@ public class Dividend {
     @Column(name = "dividend_id")
     private Long id;
 
+    @Column(name = "dividend_dt")
     private LocalDate date;
 
+    @Column(name = "dividend_amt")
     private String dividend;
 
     @ManyToOne(fetch = FetchType.LAZY)

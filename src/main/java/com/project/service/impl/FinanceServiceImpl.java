@@ -5,6 +5,7 @@ import com.project.domain.CompanyDividendInfo;
 import com.project.dto.CompanyDto;
 import com.project.dto.DividendDto;
 import com.project.exception.ErrorCode;
+import com.project.exception.ServiceException;
 import com.project.repository.CompanyRepository;
 import com.project.service.FinanceService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class FinanceServiceImpl implements FinanceService {
     public CompanyDividendInfo findAllCompanyAndDividend(String companyName) {
         Company findCompany = companyRepository.findByName(companyName)
                 .orElseThrow(() ->
-                        new CompanyException(ErrorCode.COMPANY_NOT_FOUND));
+                        new ServiceException(ErrorCode.COMPANY_NOT_FOUND));
 
         List<DividendDto> list =
                 findCompany

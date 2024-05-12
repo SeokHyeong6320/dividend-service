@@ -1,6 +1,7 @@
 package com.project.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -24,10 +25,13 @@ import java.util.stream.Collectors;
 public class Member implements UserDetails {
 
     @Id @GeneratedValue
+    @Column(name = "member_id")
     private Long id;
 
+    @Column(name = "member_name")
     private String username;
     @JsonIgnore
+    @Column(name = "member_pw")
     private String password;
 
     @JsonIgnore

@@ -18,7 +18,9 @@ public class Company {
     @Column(name = "company_id")
     private Long id;
 
+    @Column(name = "company_name")
     private String name;
+    @Column(name = "company_ticker")
     private String ticker;
 
     @Setter

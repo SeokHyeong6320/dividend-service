@@ -1,6 +1,4 @@
 spring:
-  application:
-    name: dayone-financial
 
   h2:
     console:
@@ -31,13 +29,21 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
 
+scheduler:
+  scrap:
+    yahoo: 0 0 0 * * *
+
+
+
 scrapper:
   YahooFinance:
     info-url: https://finance.yahoo.com/quote/%s?p=%s
     detail-url: https://finance.yahoo.com/quote/%s/history?frequency=1mo&period1=%d&period2=%d
     start-time: 86400
 
-
-scheduler:
-  scrap:
-    yahoo: 0 0 0 * * *
+token-provider:
+  jwt:
+    key:
+      roles: roles
+    token:
+      expire-time: 3600000
